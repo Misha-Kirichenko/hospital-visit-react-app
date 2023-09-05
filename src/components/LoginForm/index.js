@@ -16,8 +16,10 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import AuthService from "../../services/AuthService";
 import "./loginForm.css";
 import "./media.css";
+import useMetaData from "../../hooks/useMetaData";
 
-const LoginForm = () => {
+const LoginForm = ({ metaData }) => {
+  useMetaData(metaData);
   const navigate = useNavigate();
   const authService = new AuthService();
   const [errMsg, setErrMsg] = useState(null);
@@ -26,6 +28,12 @@ const LoginForm = () => {
 
   const setFullLoginData = (inputObj) => {
     setLoginData({ ...loginData, ...inputObj });
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      actionLogin();
+    }
   };
 
   const actionLogin = async () => {
@@ -63,6 +71,7 @@ const LoginForm = () => {
             variant="standard"
             className="w-100"
             onInput={({ target }) => setFullLoginData({ email: target.value })}
+            onKeyPress={handleKeyPress}
           />
         </Box>
         <Box className="login-form-element">
@@ -71,6 +80,7 @@ const LoginForm = () => {
               Password
             </InputLabel>
             <Input
+              onKeyPress={handleKeyPress}
               onInput={({ target }) =>
                 setFullLoginData({ password: target.value })
               }

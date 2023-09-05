@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginForm from "../LoginForm";
 import "./app.css";
-import WithAuth from "../HOC/withAuth";
+import WithAuth from "../HOC/WithAuth";
 import Visits from "../Visits";
 
 const AppRouter = () => {
@@ -13,11 +13,27 @@ const AppRouter = () => {
           exact
           element={
             <WithAuth>
-              <Visits />
+              <Visits
+                metaData={{
+                  title: "Visits",
+                  meta: { description: "Visits table" },
+                }}
+              />
             </WithAuth>
           }
         />
-        <Route path="/login" exact element={<LoginForm />} />
+        <Route
+          path="/login"
+          exact
+          element={
+            <LoginForm
+              metaData={{
+                title: "Login",
+                meta: { description: "Login to admin" },
+              }}
+            />
+          }
+        />
       </Routes>
     </Router>
   );
