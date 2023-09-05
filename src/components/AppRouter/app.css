@@ -1,0 +1,37 @@
+:root {
+  --login-form-text: white;
+}
+
+#root {
+  background: linear-gradient(to bottom, #3387ee, #f0f0f0);
+  height: 100vh;
+  font-size: 24px;
+  flex-direction: column;
+}
+
+.resp-img {
+  width: 100%;
+  height: auto;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+.round-border {
+  border-radius: 8px;
+}
+
+.round-border.MuiBox-root.css-0.wrapper {
+  padding: 25px;
+  box-sizing: border-box;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.err-msg {
+  color: red;
+}
