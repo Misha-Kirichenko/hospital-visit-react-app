@@ -8,9 +8,14 @@ export default class AuthService {
     }
   }
   async login(userData) {
-    const res = await axios.post(`${this.apiBase}/admin/login`, userData);
+    const { email, password, remember } = userData;
+    const res = await axios.post(`${this.apiBase}/admin/login`, {
+      email,
+      password,
+    });
     const { token } = res.data;
-    localStorage.setItem("token", token);
+    if (remember) localStorage.setItem("token", token);
+    else sessionStorage.setItem("token", token);
     return true;
   }
 }

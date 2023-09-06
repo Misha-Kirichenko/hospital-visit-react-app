@@ -9,6 +9,8 @@ import {
   TextField,
   Typography,
   FormControl,
+  Checkbox,
+  FormControlLabel,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import InputLabel from "@mui/material/InputLabel";
@@ -23,10 +25,16 @@ const LoginForm = ({ metaData }) => {
   const navigate = useNavigate();
   const authService = new AuthService();
   const [errMsg, setErrMsg] = useState(null);
-  const [loginData, setLoginData] = useState({ email: "", password: "" });
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+    remember: false,
+  });
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const setFullLoginData = (inputObj) => {
+    console.log(inputObj);
     setLoginData({ ...loginData, ...inputObj });
   };
 
@@ -41,11 +49,13 @@ const LoginForm = ({ metaData }) => {
       const { email, password } = loginData;
       if (!email || !password) setErrMsg("Enter your credentials");
       else {
+        setLoading(true);
         const loggedIn = await authService.login(loginData);
         if (loggedIn) navigate("/");
       }
     } catch (err) {
       const { message: msg } = err.response.data;
+      setLoading(false);
       setErrMsg(msg);
     }
   };
@@ -53,7 +63,7 @@ const LoginForm = ({ metaData }) => {
   return (
     <Box id="login-form-wrapper">
       <Box sx={{ width: "100px" }}>
-        <img src="/img/logo.png" className="resp-img" alt="logo" />
+        <img src="/assets/logo.png" className="resp-img" alt="logo" />
       </Box>
 
       <Typography variant="h3" sx={{ mb: 2, color: "var(--login-form-text)" }}>
@@ -104,8 +114,29 @@ const LoginForm = ({ metaData }) => {
           </FormControl>
         </Box>
         <Box className="login-form-element">
+          <FormControlLabel
+            control={<Checkbox name="gilad" />}
+            label="remember me"
+            onChange={() =>
+              setFullLoginData({
+                remember: !loginData.remember,
+              })
+            }
+          />
+        </Box>
+        <Box className="login-form-element">
           <Button variant="contained" className="w-100" onClick={actionLogin}>
-            Login
+            {loading ? (
+              <Box className="loading-wrapper">
+                <img
+                  src="/assets/loading.gif"
+                  alt="loading"
+                  className="w-100"
+                />
+              </Box>
+            ) : (
+              "Login"
+            )}
           </Button>
         </Box>
       </Box>

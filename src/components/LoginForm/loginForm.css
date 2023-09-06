@@ -6,6 +6,10 @@
   height: 100%;
 }
 
+.loading-wrapper {
+  width: 20px;
+}
+
 #login-form {
   background-color: white;
   width: 50%;
